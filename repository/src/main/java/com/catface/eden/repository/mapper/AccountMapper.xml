@@ -5,7 +5,7 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id
-        , account, password, status, created, updated, remark
+        ,user_id, account, password, status, created, updated, remark
     </sql>
 
     <select id="selectByAccount" resultType="com.catface.eden.repository.entity.Account">

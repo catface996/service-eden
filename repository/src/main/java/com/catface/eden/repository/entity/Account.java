@@ -30,6 +30,9 @@ public class Account implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
+    @ApiModelProperty(value = "所属用户ID")
+    private Long userId;
+
     @ApiModelProperty(value = "登录账号")
     private String account;
 
