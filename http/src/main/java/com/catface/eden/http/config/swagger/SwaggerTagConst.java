@@ -15,4 +15,7 @@ public class SwaggerTagConst {
     public static final String AUTH = "认证管理";
 
 
+    public static final String REGISTER = "注册";
+
+
 }

@@ -12,6 +12,9 @@ import lombok.Data;
 @ApiModel(description = "租户模型")
 public class TenantVO {
 
+    @ApiModelProperty(value = "客户ID",required = true,example = "8123456789")
+    private Long clientId;
+
     @ApiModelProperty(value = "租户ID",required = true,example = "1234567890")
     private Long tenantId;
 
