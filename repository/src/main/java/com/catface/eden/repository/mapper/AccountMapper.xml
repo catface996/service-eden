@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.catface.eden.repository.mapper.DemoTableMapper">
+<mapper namespace="com.catface.eden.repository.mapper.AccountMapper">
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id
-        , name, age, created, updated
+        , account, password, status, created, updated, remark
     </sql>
-    <select id="selectByName" resultType="com.catface.eden.repository.entity.DemoTable">
+
+    <select id="selectByAccount" resultType="com.catface.eden.repository.entity.Account">
         select
         <include refid="Base_Column_List"/>
-        from demo_table where name like concat('%',#{name},'%')
+        from account where account = #{account}
     </select>
 
 </mapper>

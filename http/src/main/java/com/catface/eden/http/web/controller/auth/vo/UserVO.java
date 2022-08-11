@@ -12,12 +12,18 @@ import java.util.List;
  */
 @Data
 @ApiModel(description = "登录响应结果")
-public class LoginVO {
+public class UserVO {
 
-    @ApiModelProperty(value = "当前登录用户ID",required = true,example = "91234567890")
+    @ApiModelProperty(value = "用户ID")
     private Long userId;
 
-    @ApiModelProperty(value = "当前用户所属的租户列表",required = true)
-    private List<TenantVO> tenants;
+    @ApiModelProperty(value = "用户名称")
+    private String userName;
+
+    @ApiModelProperty(value = "用户头像")
+    private String avatar;
+
+    @ApiModelProperty(value = "用户关联的客户列表")
+    private List<ClientVO> clients;
 
 }

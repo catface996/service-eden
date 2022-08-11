@@ -2,9 +2,13 @@ package com.catface.eden.http.web.controller.auth;
 
 import com.catface.common.model.JsonResult;
 import com.catface.eden.http.config.swagger.SwaggerTagConst;
+import com.catface.eden.http.web.controller.auth.convert.UserConvert;
 import com.catface.eden.http.web.controller.auth.request.ChangePasswordRequest;
 import com.catface.eden.http.web.controller.auth.request.LoginWithPasswordRequest;
-import com.catface.eden.http.web.controller.auth.vo.LoginVO;
+import com.catface.eden.http.web.controller.auth.vo.UserVO;
+import com.catface.eden.service.account.AccountService;
+import com.catface.eden.service.user.UserService;
+import com.catface.eden.service.user.model.UserDetailModel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +27,22 @@ import javax.validation.Valid;
 @RestController
 public class AuthController {
 
+    private final AccountService accountService;
+
+    private final UserService userService;
+
+    public AuthController(AccountService accountService, UserService userService) {
+        this.accountService = accountService;
+        this.userService = userService;
+    }
 
     @ApiOperation(value = "使用账号密码登录")
     @PostMapping(value = {"/anonymous/auth/loginWithPassword"})
-    public JsonResult<LoginVO> loginWithPassword(@RequestBody @Valid LoginWithPasswordRequest request) {
-        return JsonResult.success(new LoginVO());
+    public JsonResult<UserVO> loginWithPassword(@RequestBody @Valid LoginWithPasswordRequest request) {
+        Long accountId = accountService.checkPassword(request.getAccount(), request.getPassword());
+        UserDetailModel model = userService.queryByAccount(accountId);
+        UserVO vo = UserConvert.convert(model);
+        return JsonResult.success(vo);
     }
 
     @ApiOperation(value = "修改登录密码")
