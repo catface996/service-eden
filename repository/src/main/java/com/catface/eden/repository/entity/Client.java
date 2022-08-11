@@ -1,14 +1,15 @@
 package com.catface.eden.repository.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.catface.eden.common.enums.ClientStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -20,7 +21,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="Client对象", description="客户")
+@ApiModel(value = "Client对象", description = "客户")
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,7 +37,7 @@ public class Client implements Serializable {
     private Long belongUserId;
 
     @ApiModelProperty(value = "客户状态")
-    private String status;
+    private ClientStatusEnum status;
 
     @ApiModelProperty(value = "创建时间")
     private Date created;

@@ -7,15 +7,14 @@ package com.catface.eden.http.config.swagger;
 public class SwaggerTagConst {
 
     private SwaggerTagConst() {}
-
-    public static final String GOODS_MANAGE = "商品管理";
-
     public static final String SAY_HELLO = "打招呼";
 
-    public static final String AUTH = "认证管理";
-
+    public static final String AUTH = "认证";
 
     public static final String REGISTER = "注册";
+
+
+    public static final String CLIENT = "客户";
 
 
 }

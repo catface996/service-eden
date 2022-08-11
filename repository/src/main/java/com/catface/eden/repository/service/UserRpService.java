@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserRpService extends IService<User> {
 
+    /**
+     * 判断用户是否有效
+     * @param userId 用户ID
+     * @return true:有效;false:无效
+     */
+    boolean isAvailable(Long userId);
 }
