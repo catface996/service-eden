@@ -9,9 +9,9 @@ import com.catface.eden.service.user.model.UserDetailModel;
 public interface UserService {
 
     /**
-     * 根据登录账户ID查询用户详情
-     * @param accountId 登录账户ID
+     * 根据用户ID查询用户
+     * @param userId 用户ID
      * @return 用户详情
      */
-    UserDetailModel queryByAccount(Long accountId);
+    UserDetailModel queryByUserId(Long userId);
 }

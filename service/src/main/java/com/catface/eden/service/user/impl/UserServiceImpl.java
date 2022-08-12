@@ -1,5 +1,8 @@
 package com.catface.eden.service.user.impl;
 
+import com.catface.eden.repository.entity.User;
+import com.catface.eden.repository.service.ClientRpService;
+import com.catface.eden.repository.service.UserRpService;
 import com.catface.eden.service.user.UserService;
 import com.catface.eden.service.user.model.ClientModel;
 import com.catface.eden.service.user.model.UserDetailModel;
@@ -18,24 +21,28 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 
+    private final UserRpService userRpService;
+
+    private final ClientRpService clientRpService;
+
+    public UserServiceImpl(UserRpService userRpService, ClientRpService clientRpService) {
+        this.userRpService = userRpService;
+        this.clientRpService = clientRpService;
+    }
+
     /**
-     * 根据登录账户ID查询用户详情
+     * 根据用户ID查询用户
      *
-     * @param accountId 登录账户ID
+     * @param userId 用户ID
      * @return 用户详情
      */
     @Override
-    public UserDetailModel queryByAccount(Long accountId) {
-        UserDetailModel model=  new UserDetailModel();
-        model.setUserId(13212121212L);
-        model.setUserName("catface");
+    public UserDetailModel queryByUserId(Long userId) {
+        User user = userRpService.getById(userId);
+        if (user == null){
+            return null;
+        }
 
-        ClientModel clientModel= new ClientModel();
-        clientModel.setClientName("大猫科技");
-        clientModel.setClientId(12121212L);
-        List<ClientModel> clientModels = new ArrayList<>();
-        clientModels.add(clientModel);
-        model.setClients(clientModels);
-        return model;
+        return null;
     }
 }

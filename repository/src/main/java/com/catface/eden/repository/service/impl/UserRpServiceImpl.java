@@ -34,4 +34,5 @@ public class UserRpServiceImpl extends ServiceImpl<UserMapper, User> implements 
         }
         return user.getStatus() == UserStatusEnum.AVAILABLE;
     }
+
 }

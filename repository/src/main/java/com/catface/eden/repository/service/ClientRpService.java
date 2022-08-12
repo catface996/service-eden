@@ -1,7 +1,7 @@
 package com.catface.eden.repository.service;
 
-import com.catface.eden.repository.entity.Client;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.catface.eden.repository.entity.Client;
 
 /**
  * <p>

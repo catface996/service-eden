@@ -40,7 +40,7 @@ public class AuthController {
     @PostMapping(value = {"/anonymous/auth/loginWithPassword"})
     public JsonResult<UserVO> loginWithPassword(@RequestBody @Valid LoginWithPasswordRequest request) {
         Long accountId = accountService.checkPassword(request.getAccount(), request.getPassword());
-        UserDetailModel model = userService.queryByAccount(accountId);
+        UserDetailModel model = new UserDetailModel();
         UserVO vo = UserConvert.convert(model);
         return JsonResult.success(vo);
     }

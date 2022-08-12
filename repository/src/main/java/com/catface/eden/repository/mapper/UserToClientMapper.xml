@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.catface.eden.repository.mapper.UserToClientMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , user_id, user_alias, client_id, created, updated, remark
+    </sql>
+
+    <!-- 分页查询绑定到客户的用户列表 -->
+    <select id="selectOnePage" resultType="com.catface.eden.repository.entity.UserToClient">
+        select
+        <include refid="Base_Column_List"/>
+        from user_to_client
+        where
+        client_id = #{param.clientId}
+        <if test="param.userAlias!=null and param.userAlias!=''">
+            and user_alias like concat('%',#{param.userAlias},'%')
+        </if>
+    </select>
+
+</mapper>

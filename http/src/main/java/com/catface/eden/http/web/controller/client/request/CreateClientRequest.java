@@ -1,4 +1,4 @@
-package com.catface.eden.http.web.controller.client.param;
+package com.catface.eden.http.web.controller.client.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

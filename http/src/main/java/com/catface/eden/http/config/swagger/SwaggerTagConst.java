@@ -13,8 +13,9 @@ public class SwaggerTagConst {
 
     public static final String REGISTER = "注册";
 
-
     public static final String CLIENT = "客户";
+
+    public static final String USER = "用户";
 
 
 }
