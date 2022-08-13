@@ -13,4 +13,3 @@ ENV JAVA_OPTS "-Xmx512M -Xms512M"
 ENV SPRING_OPTS "--spring.profiles.active=local"
 CMD ["cd /root/app/"]
 ENTRYPOINT ["sh","-c","java -Dfile.encoding=UTF-8 ${JAVA_OPTS} -jar /root/app/eden-app.jar ${SPRING_OPTS}"]
-

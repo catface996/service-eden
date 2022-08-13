@@ -15,4 +15,7 @@ public class ClientModel {
 
     @ApiModelProperty(value = "客户名称")
     private String clientName;
+
+    @ApiModelProperty(value = "客户所属用户ID")
+    private Long belongUserId;
 }

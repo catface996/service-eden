@@ -12,9 +12,10 @@ public class UserConvert {
 
     private static final BeanCopier USER_MODEL_2_VO = BeanCopier.create(UserDetailModel.class, UserVO.class, false);
 
-    public static UserVO convert(UserDetailModel model) {
+    public static UserVO convert(UserDetailModel model,String token) {
         UserVO vo = new UserVO();
         USER_MODEL_2_VO.copy(model, vo, null);
+        vo.setToken(token);
         return vo;
     }
 }

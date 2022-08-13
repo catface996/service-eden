@@ -26,4 +26,7 @@ public class UserVO {
     @ApiModelProperty(value = "用户关联的客户列表")
     private List<ClientVO> clients;
 
+    @ApiModelProperty(value = "登录凭证")
+    private String token;
+
 }
