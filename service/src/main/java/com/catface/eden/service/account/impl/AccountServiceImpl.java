@@ -11,6 +11,7 @@ import com.catface.eden.repository.service.UserRpService;
 import com.catface.eden.service.account.AccountService;
 import com.catface.eden.service.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -50,17 +51,18 @@ public class AccountServiceImpl implements AccountService {
      *
      * @param account  登录账号
      * @param password 登录密码
+     * @param userName 用户名
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
-    public void createAccount(String account, String password) {
+    public void createAccount(String account, String password, String userName) {
 
         // 登录账号存在性检查,不允许重复注册
         Account accountExist = accountRpService.queryByAccount(account);
         Assert.state(accountExist == null, "账号已被注册");
 
         // 创建用户
-        User userCreated = createAndSaveUser("未设置");
+        User userCreated = createAndSaveUser(userName);
 
         // 创建并保存登录账号
         createAndSaveAccount(account, password, userCreated);
@@ -85,7 +87,26 @@ public class AccountServiceImpl implements AccountService {
 
         Assert.state(accountExist.getPassword().equals(cPwd), "密码错误");
 
-        return accountExist.getId();
+        return accountExist.getUserId();
+    }
+
+    /**
+     * 修改登录密码
+     *
+     * @param accountId   登录账号ID
+     * @param oldPassword 原密码
+     * @param newPassword 新密码
+     */
+    @Override
+    public void changePassword(Long accountId, String oldPassword, String newPassword) {
+
+        // 检查原始密码是否一致,不一致,不允许修改
+        Account account = accountRpService.getById(accountId);
+        boolean rightOldPwd = account.getPassword().equals(MD5Util.md5(oldPassword));
+        Assert.state(rightOldPwd, "原始密码有误");
+
+        // 更新账户的密码
+        updateNewPwd(accountId, newPassword);
     }
 
     /**
@@ -120,6 +141,22 @@ public class AccountServiceImpl implements AccountService {
         userForCreate.setStatus(UserStatusEnum.AVAILABLE);
         userRpService.save(userForCreate);
         return userForCreate;
+    }
+
+    /**
+     * 更新登录账户的密码
+     *
+     * @param accountId 待更新账户的ID
+     * @param password  待更新的密码
+     */
+    private void updateNewPwd(Long accountId, String password) {
+        String newPwd = MD5Util.md5(password);
+        Assert.notNull(newPwd, "密码摘要异常");
+        Account accountForUpdate = new Account();
+        accountForUpdate.setId(accountId);
+        accountForUpdate.setUpdated(DateTime.now().toDate());
+        accountForUpdate.setPassword(newPwd);
+        accountRpService.updateById(accountForUpdate);
     }
 
 

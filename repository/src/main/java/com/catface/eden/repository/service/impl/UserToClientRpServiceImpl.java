@@ -34,4 +34,15 @@ public class UserToClientRpServiceImpl extends ServiceImpl<UserToClientMapper, U
         List<UserToClient> entities = baseMapper.selectOnePage(param);
         return param.setRecords(entities);
     }
+
+    /**
+     * 根据用户查询绑定的客户列表
+     *
+     * @param userId 用户ID
+     * @return 用户和客户绑定关系列表
+     */
+    @Override
+    public List<UserToClient> queryByUserId(Long userId) {
+        return baseMapper.selectByUserId(userId);
+    }
 }

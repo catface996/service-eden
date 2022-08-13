@@ -39,15 +39,16 @@ public class AuthController {
     @ApiOperation(value = "使用账号密码登录")
     @PostMapping(value = {"/anonymous/auth/loginWithPassword"})
     public JsonResult<UserVO> loginWithPassword(@RequestBody @Valid LoginWithPasswordRequest request) {
-        Long accountId = accountService.checkPassword(request.getAccount(), request.getPassword());
-        UserDetailModel model = new UserDetailModel();
-        UserVO vo = UserConvert.convert(model);
+        Long userId = accountService.checkPassword(request.getAccount(), request.getPassword());
+        UserDetailModel detailModel = userService.queryUserDetail(userId);
+        UserVO vo = UserConvert.convert(detailModel);
         return JsonResult.success(vo);
     }
 
     @ApiOperation(value = "修改登录密码")
     @PostMapping(value = {"/public/auth/changePassword"})
     public JsonResult<Boolean> changePassword(@RequestBody @Valid ChangePasswordRequest request) {
+        accountService.changePassword(request.getCtxUserId(), request.getOldPassword(), request.getNewPassword());
         return JsonResult.success(true);
     }
 

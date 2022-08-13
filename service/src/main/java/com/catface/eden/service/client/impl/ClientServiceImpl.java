@@ -15,6 +15,8 @@ import com.catface.eden.service.client.param.CreateClientParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 /**
@@ -42,6 +44,7 @@ public class ClientServiceImpl implements ClientService {
      *
      * @param param 创建客户的请求参数,包括创建当前客户的用户ID,以及客户名称
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void createClient(CreateClientParam param) {
 
@@ -50,7 +53,10 @@ public class ClientServiceImpl implements ClientService {
         Assert.state(available, "无效用户,无法创建客户");
 
         // 构建并保存客户
-        buildAndSaveClient(param);
+        Client client = buildAndSaveClient(param);
+
+        // 建立当前用户和客户的关联关系
+        buildUserToClientRelationAndSave(param.getBelongUserId(), client.getId(), "管理员");
     }
 
     /**
@@ -73,7 +79,7 @@ public class ClientServiceImpl implements ClientService {
         Assert.state(canBind, "仅允许客户管理员执行绑定");
 
         // 构建并保存用户的客户的关联关系
-        buildUserToClientRelationAndSave(param);
+        buildUserToClientRelationAndSave(param.getUserId(), param.getClientId(), param.getUserAlias());
     }
 
     /**
@@ -120,24 +126,28 @@ public class ClientServiceImpl implements ClientService {
      *
      * @param param 创建客户请求参数
      */
-    private void buildAndSaveClient(CreateClientParam param) {
+    private Client buildAndSaveClient(CreateClientParam param) {
         Client client = new Client();
         client.setClientName(param.getClientName());
         client.setBelongUserId(param.getBelongUserId());
         client.setStatus(ClientStatusEnum.AVAILABLE);
         clientRpService.save(client);
+        return client;
     }
+
 
     /**
      * 构建用户和客户的绑定关系,并保存
      *
-     * @param param 执行保定需要的参数
+     * @param userId    用户ID
+     * @param clientId  客户ID
+     * @param userAlias 用户别名
      */
-    private void buildUserToClientRelationAndSave(BindUserToClientParam param) {
+    private void buildUserToClientRelationAndSave(Long userId, Long clientId, String userAlias) {
         UserToClient user2Client = new UserToClient();
-        user2Client.setClientId(param.getClientId());
-        user2Client.setUserId(param.getUserId());
-        user2Client.setUserAlias(param.getUserAlias());
+        user2Client.setClientId(clientId);
+        user2Client.setUserId(userId);
+        user2Client.setUserAlias(userAlias);
         try {
             user2ClientRpService.save(user2Client);
         } catch (DuplicateKeyException e) {

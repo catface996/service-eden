@@ -12,12 +12,9 @@ import lombok.Data;
 @ApiModel(description = "租户模型")
 public class ClientVO {
 
-    @ApiModelProperty(value = "客户ID",required = true,example = "8123456789")
+    @ApiModelProperty(value = "客户ID", required = true, example = "8123456789")
     private Long clientId;
 
-    @ApiModelProperty(value = "租户ID",required = true,example = "1234567890")
-    private Long tenantId;
-
-    @ApiModelProperty(value = "租户名称",required = true,example = "大猫科技")
-    private String tenantName;
+    @ApiModelProperty(value = "客户名称", required = true, example = "大猫科技")
+    private String clientName;
 }

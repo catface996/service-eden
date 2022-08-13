@@ -41,7 +41,7 @@ public class RegisterController {
     @ApiOperation(value = "通过账号密码注册")
     @PostMapping(value = {"/anonymous/register/registerWithPassword"})
     public JsonResult<Boolean> registerWithPassword(@RequestBody @Valid RegisterWithPasswordRequest request) {
-        accountService.createAccount(request.getAccount(), request.getPassword());
+        accountService.createAccount(request.getAccount(), request.getPassword(), request.getUserName());
         return JsonResult.success(true);
     }
 

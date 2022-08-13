@@ -13,5 +13,5 @@ public interface UserService {
      * @param userId 用户ID
      * @return 用户详情
      */
-    UserDetailModel queryByUserId(Long userId);
+    UserDetailModel queryUserDetail(Long userId);
 }

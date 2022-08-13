@@ -14,12 +14,16 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class RegisterWithPasswordRequest {
 
-    @ApiModelProperty(value = "待注册的账号",required = true,example = "abcdef")
+    @ApiModelProperty(value = "待注册的账号", required = true, example = "abcdef")
     @NotBlank(message = "待注册的账号不能为空")
     private String account;
 
-    @ApiModelProperty(value = "账号密码",required = true,example = "131212")
+    @ApiModelProperty(value = "账号密码", required = true, example = "131212")
     @NotBlank(message = "登录密码不能为空")
     private String password;
+
+    @ApiModelProperty(value = "用户名称", required = true, example = "大L")
+    @NotBlank(message = "用户名称不能为空")
+    private String userName;
 
 }

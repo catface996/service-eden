@@ -20,4 +20,11 @@
         </if>
     </select>
 
+    <!-- 根据用户查询绑定的客户列表 -->
+    <select id="selectByUserId" resultType="com.catface.eden.repository.entity.UserToClient">
+        select
+        <include refid="Base_Column_List"/>
+        from user_to_client where user_id = #{userId}
+    </select>
+
 </mapper>
